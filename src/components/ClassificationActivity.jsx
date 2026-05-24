@@ -317,6 +317,14 @@ const ClassificationActivity = ({ activities, unitId }) => {
         </div>
       </header>
 
+      {isComplete && (
+        <section className="rounded-lg border border-gold/60 bg-gold/10 p-5 text-center shadow-[0_0_30px_rgba(255,215,0,0.08)]">
+          <PartyPopper className="mx-auto text-gold" size={40} />
+          <h2 className="mt-3 text-2xl font-black text-white">完成！</h2>
+          <p className="mt-1 text-muted">全部の生物を正しく分類できました。ツリーはこのまま見られます。</p>
+        </section>
+      )}
+
       <section className="rounded-lg border border-white/10 bg-card p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
           <h3 className="font-black text-white">付箋カード</h3>
@@ -363,19 +371,6 @@ const ClassificationActivity = ({ activities, unitId }) => {
         </div>
       </section>
 
-      {isComplete && (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-background/90 p-4 backdrop-blur">
-          <div className="w-full max-w-md rounded-lg border border-gold/60 bg-card p-8 text-center shadow-2xl">
-            <PartyPopper className="mx-auto text-gold" size={52} />
-            <h2 className="mt-4 text-3xl font-black text-white">完成！</h2>
-            <p className="mt-2 text-muted">全部の生物を正しく分類できました。</p>
-            <button type="button" onClick={reset} className="btn-primary mt-6 bg-gold text-background">
-              <RotateCcw className="mr-2 inline" size={18} />
-              もう一度！
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
