@@ -72,7 +72,7 @@ const UnitPage = ({ mode }) => {
 
   const content = useMemo(() => {
     if (!unit || !activeMode) return null;
-    if (activeMode === 'slides') return <SlideViewer key={unit.id} slides={unit.slides || []} unitColor={unitColor} />;
+    if (activeMode === 'slides') return <SlideViewer key={unit.id} slides={unit.slides || []} unitEmoji={unit.emoji} />;
     if (activeMode === 'flashcards') return <FlashcardDeck key={unit.id} flashcards={unit.flashcards || []} unitColor={unitColor} />;
     if (activeMode === 'chart') return <ClassificationChart key={unit.id} charts={unit.chart || []} unitColor={unitColor} />;
     if (activeMode === 'activity') return <ClassificationActivity key={unit.id} activities={unit.activity || []} unitId={unit.id} />;
