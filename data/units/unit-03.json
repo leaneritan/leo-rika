@@ -1,0 +1,19 @@
+{
+  "id": "unit-03",
+  "day": 3,
+  "title": "第2章後半＋第3章",
+  "subtitle": "葉・根＋動物の分類",
+  "emoji": "🦎",
+  "slides": [],
+  "flashcards": [],
+  "timeline": [],
+  "quiz": [
+    {
+      "id": "q3-1",
+      "question": "背骨がある動物を何というか？",
+      "options": ["無脊椎動物", "脊椎動物", "軟体動物", "節足動物"],
+      "answer": 1,
+      "explanation": "背骨がある動物を脊椎動物といいます。"
+    }
+  ]
+}
