@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CheckCircle2, PartyPopper, RotateCcw, XCircle } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
 
+const ACTIVITY_STORAGE_PREFIX = 'leo-rika-activity';
 const branchKey = (path) => path.join('-');
 
 const annotateBranches = (branches, parentPath = []) => branches.map((branch, index) => {
@@ -157,9 +158,19 @@ const BranchZone = ({
 
 const ClassificationActivity = ({ activities, unitId }) => {
   const activity = activities?.find((item) => item.type === 'classification');
+  const storageKey = activity ? `${ACTIVITY_STORAGE_PREFIX}-${unitId}-${activity.title}` : null;
   const { markComplete } = useProgress();
   const [selectedId, setSelectedId] = useState(null);
-  const [placements, setPlacements] = useState({});
+  const [placements, setPlacements] = useState(() => {
+    if (!storageKey) return {};
+    try {
+      const saved = localStorage.getItem(storageKey);
+      return saved ? JSON.parse(saved) : {};
+    } catch (error) {
+      console.error('Failed to load activity progress', error);
+      return {};
+    }
+  });
   const [feedback, setFeedback] = useState(null);
   const [isComplete, setIsComplete] = useState(false);
 
@@ -183,6 +194,34 @@ const ClassificationActivity = ({ activities, unitId }) => {
     [placements, deepestBranchByOrganism],
   );
   const availableOrganisms = (activity?.organisms || []).filter((organism) => !placedIds.has(organism.id));
+
+  useEffect(() => {
+    setSelectedId(null);
+    setFeedback(null);
+    setIsComplete(false);
+
+    if (!storageKey) {
+      setPlacements({});
+      return;
+    }
+
+    try {
+      const saved = localStorage.getItem(storageKey);
+      setPlacements(saved ? JSON.parse(saved) : {});
+    } catch (error) {
+      console.error('Failed to load activity progress', error);
+      setPlacements({});
+    }
+  }, [storageKey]);
+
+  useEffect(() => {
+    if (!storageKey) return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(placements));
+    } catch (error) {
+      console.error('Failed to save activity progress', error);
+    }
+  }, [placements, storageKey]);
 
   useEffect(() => {
     if (!activity || isComplete || completedIds.size !== activity.organisms.length) return;
@@ -248,6 +287,7 @@ const ClassificationActivity = ({ activities, unitId }) => {
     setPlacements({});
     setFeedback(null);
     setIsComplete(false);
+    if (storageKey) localStorage.removeItem(storageKey);
   };
 
   return (
@@ -261,8 +301,16 @@ const ClassificationActivity = ({ activities, unitId }) => {
       <section className="rounded-lg border border-white/10 bg-card p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
           <h3 className="font-black text-white">付箋カード</h3>
-          <span className="text-sm text-muted">{completedIds.size} / {activity.organisms.length}</span>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted">完成 {completedIds.size} / {activity.organisms.length}</span>
+            <button type="button" onClick={reset} className="rounded-md bg-white/10 px-3 py-1 text-xs font-black text-muted transition hover:bg-white/20 hover:text-white">
+              最初から
+            </button>
+          </div>
         </div>
+        <p className="mb-3 text-sm text-muted">
+          まず大きなグループに置いて、枝が開いたら同じカードをさらに細かいグループへ動かします。
+        </p>
         <div className="flex gap-3 overflow-x-auto pb-2">
           {availableOrganisms.map((organism) => (
             <StickyCard
