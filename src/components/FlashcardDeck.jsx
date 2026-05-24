@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../hooks/useProgress';
 import { ChevronLeft, ChevronRight, RotateCcw, Check, RefreshCw } from 'lucide-react';
 
@@ -66,7 +66,7 @@ const FlashcardDeck = ({ flashcards, unitColor, unitId }) => {
           {/* Front */}
           <div className={`absolute inset-0 backface-hidden card flex items-center justify-center p-8 text-center border-b-4 shadow-xl`} style={{ borderBottomColor: unitColor }}>
             <h2 className="text-3xl font-serif font-bold leading-relaxed">
-              {currentCard.term}
+              {currentCard.front}
             </h2>
             <div className="absolute bottom-4 right-4 opacity-30 group-hover:opacity-100 transition-opacity">
               <RefreshCw size={20} />
@@ -81,7 +81,7 @@ const FlashcardDeck = ({ flashcards, unitColor, unitId }) => {
           {/* Back */}
           <div className={`absolute inset-0 backface-hidden rotate-y-180 card flex items-center justify-center p-8 text-center border-b-4 shadow-xl bg-slate-800`} style={{ borderBottomColor: unitColor }}>
             <p className="text-xl leading-relaxed text-text">
-              {currentCard.definition}
+              {currentCard.back}
             </p>
           </div>
         </div>
