@@ -53,7 +53,6 @@ const UnitPage = ({ mode }) => {
             flashcards: shuffleItems(sourceUnits.flatMap((source) => source.flashcards || [])),
             quiz: shuffleItems(sourceUnits.flatMap((source) => source.quiz || [])),
             chart: sourceUnits.flatMap((source) => source.chart || []),
-            activity: sourceUnits.flatMap((source) => source.activity || []),
           });
         } else {
           setUnit(data);
@@ -69,6 +68,8 @@ const UnitPage = ({ mode }) => {
 
   const activeMode = mode || '';
   const unitColor = unit?.color || '#4ECDC4';
+  const visibleModes = modes.filter((item) => item.id !== 'activity' || (unit?.activity || []).length > 0);
+  const hasActiveMode = !activeMode || visibleModes.some((item) => item.id === activeMode);
 
   const content = useMemo(() => {
     if (!unit || !activeMode) return null;
@@ -86,6 +87,18 @@ const UnitPage = ({ mode }) => {
 
   if (!unit) {
     return <div className="grid min-h-screen place-items-center px-4 text-muted">読み込み中...</div>;
+  }
+
+  if (!hasActiveMode) {
+    return (
+      <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-8 text-center">
+        <h1 className="text-3xl font-black text-white">{unit.title}</h1>
+        <p className="text-muted">このユニットにはそのモードのデータがありません。</p>
+        <button type="button" onClick={() => navigate(`/unit/${id}`)} className="btn-primary mx-auto bg-white/10 hover:bg-white/20">
+          ユニットに戻る
+        </button>
+      </main>
+    );
   }
 
   return (
@@ -114,7 +127,7 @@ const UnitPage = ({ mode }) => {
 
       {!activeMode ? (
         <section className="grid gap-4 md:grid-cols-2">
-          {modes.map((item) => (
+          {visibleModes.map((item) => (
             <Link
               key={item.id}
               to={`/unit/${id}/${item.id}`}
