@@ -7,6 +7,15 @@ import Timeline from '../components/Timeline';
 import QuizEngine from '../components/QuizEngine';
 import { useProgress } from '../hooks/useProgress';
 
+const shuffleItems = (items) => {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const UnitPage = ({ activeTab: initialTab }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -35,13 +44,13 @@ const UnitPage = ({ activeTab: initialTab }) => {
             sourceUnits.push(await res.json());
           }
 
-          const allQuestions = sourceUnits.flatMap(u => u.quiz);
-          // Shuffle
-          const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+          const allQuestions = sourceUnits.flatMap(u => u.quiz || []);
+          const allFlashcards = sourceUnits.flatMap(u => u.flashcards || []);
 
           setUnit({
             ...data,
-            quiz: shuffled,
+            quiz: shuffleItems(allQuestions),
+            flashcards: shuffleItems(allFlashcards),
             color: '#FFD700'
           });
         } else {

@@ -1,15 +1,28 @@
 import { useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'leo-rekishi-progress';
+const STORAGE_KEY = 'leo-rika-progress';
+const LEGACY_STORAGE_KEY = 'leo-rekishi-progress';
+const INITIAL_PROGRESS = { quiz: {}, flashcards: {} };
+
+const loadSavedProgress = () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
+    return saved ? { ...INITIAL_PROGRESS, ...JSON.parse(saved) } : INITIAL_PROGRESS;
+  } catch (error) {
+    console.error('Failed to load saved progress', error);
+    return INITIAL_PROGRESS;
+  }
+};
 
 export const useProgress = () => {
-  const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { quiz: {}, flashcards: {} };
-  });
+  const [progress, setProgress] = useState(loadSavedProgress);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch (error) {
+      console.error('Failed to save progress', error);
+    }
   }, [progress]);
 
   const saveQuizResult = (unitId, correct, total) => {
@@ -18,6 +31,8 @@ export const useProgress = () => {
       quiz: {
         ...prev.quiz,
         [unitId]: {
+          completed: true,
+          score: correct,
           correct,
           total,
           lastAttempt: new Date().toISOString(),
@@ -48,8 +63,9 @@ export const useProgress = () => {
   };
 
   const clearAll = () => {
-    const initial = { quiz: {}, flashcards: {} };
-    setProgress(initial);
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+    setProgress(INITIAL_PROGRESS);
   };
 
   return {

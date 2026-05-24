@@ -13,7 +13,10 @@ const FlashcardDeck = ({ flashcards, unitColor, unitId }) => {
 
   const currentCard = deck[currentIndex];
 
-  const handleFlip = () => setIsFlipped(!isFlipped);
+  const handleFlip = (e) => {
+    e.preventDefault();
+    setIsFlipped(!isFlipped);
+  };
 
   const nextCard = () => {
     setIsFlipped(false);
@@ -106,10 +109,22 @@ const FlashcardDeck = ({ flashcards, unitColor, unitId }) => {
       </div>
 
       <style jsx="true">{`
-        .perspective { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
+        .perspective {
+          perspective: 1000px;
+          -webkit-perspective: 1000px;
+        }
+        .transform-style-3d {
+          transform-style: preserve-3d;
+          -webkit-transform-style: preserve-3d;
+        }
+        .backface-hidden {
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+          -webkit-transform: rotateY(180deg);
+        }
       `}</style>
     </div>
   );
