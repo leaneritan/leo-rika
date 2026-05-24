@@ -1,0 +1,19 @@
+{
+  "id": "unit-02",
+  "day": 2,
+  "title": "第2章前半 植物の分類①",
+  "subtitle": "花のつくり、種子植物",
+  "emoji": "🌸",
+  "slides": [],
+  "flashcards": [],
+  "timeline": [],
+  "quiz": [
+    {
+      "id": "q2-1",
+      "question": "マツの花には、花弁やがくがある？",
+      "options": ["ある", "ない"],
+      "answer": 1,
+      "explanation": "マツなどの裸子植物には、花弁やがくはありません。"
+    }
+  ]
+}
