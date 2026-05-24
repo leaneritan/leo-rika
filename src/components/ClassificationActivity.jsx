@@ -300,9 +300,21 @@ const ClassificationActivity = ({ activities, unitId }) => {
   return (
     <div className="space-y-6">
       <header className="rounded-lg border border-white/10 bg-card p-5">
-        <p className="text-sm font-black uppercase tracking-[0.2em] text-teal">分類アクティビティ</p>
-        <h2 className="mt-2 text-3xl font-black text-white">{activity.title}</h2>
-        <p className="mt-2 text-muted">{activity.instruction}</p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-teal">分類アクティビティ</p>
+            <h2 className="mt-2 text-3xl font-black text-white">{activity.title}</h2>
+            <p className="mt-2 text-muted">{activity.instruction}</p>
+          </div>
+          <button
+            type="button"
+            onClick={reset}
+            className="btn-primary flex shrink-0 items-center justify-center gap-2 bg-white/10 text-sm hover:bg-white/20"
+          >
+            <RotateCcw size={16} />
+            やり直す
+          </button>
+        </div>
       </header>
 
       <section className="rounded-lg border border-white/10 bg-card p-4">
@@ -311,7 +323,7 @@ const ClassificationActivity = ({ activities, unitId }) => {
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted">完成 {completedIds.size} / {activity.organisms.length}</span>
             <button type="button" onClick={reset} className="rounded-md bg-white/10 px-3 py-1 text-xs font-black text-muted transition hover:bg-white/20 hover:text-white">
-              最初から
+              やり直す
             </button>
           </div>
         </div>
