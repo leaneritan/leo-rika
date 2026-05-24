@@ -52,7 +52,6 @@ const UnitPage = ({ mode }) => {
             ...data,
             flashcards: shuffleItems(sourceUnits.flatMap((source) => source.flashcards || [])),
             quiz: shuffleItems(sourceUnits.flatMap((source) => source.quiz || [])),
-            chart: sourceUnits.flatMap((source) => source.chart || []),
           });
         } else {
           setUnit(data);
@@ -68,7 +67,14 @@ const UnitPage = ({ mode }) => {
 
   const activeMode = mode || '';
   const unitColor = unit?.color || '#4ECDC4';
-  const visibleModes = modes.filter((item) => item.id !== 'activity' || (unit?.activity || []).length > 0);
+  const modeData = {
+    slides: unit?.slides || [],
+    flashcards: unit?.flashcards || [],
+    chart: unit?.chart || [],
+    activity: unit?.activity || [],
+    quiz: unit?.quiz || [],
+  };
+  const visibleModes = modes.filter((item) => modeData[item.id].length > 0);
   const hasActiveMode = !activeMode || visibleModes.some((item) => item.id === activeMode);
 
   const content = useMemo(() => {
