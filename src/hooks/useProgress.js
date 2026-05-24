@@ -1,21 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'leo-rika-progress';
 const LEGACY_STORAGE_KEY = 'leo-rekishi-progress';
-const INITIAL_PROGRESS = { quiz: {}, flashcards: {} };
 
-const loadSavedProgress = () => {
+const readProgress = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
-    return saved ? { ...INITIAL_PROGRESS, ...JSON.parse(saved) } : INITIAL_PROGRESS;
+    return saved ? JSON.parse(saved) : {};
   } catch (error) {
-    console.error('Failed to load saved progress', error);
-    return INITIAL_PROGRESS;
+    console.error('Failed to read progress', error);
+    return {};
   }
 };
 
-export const useProgress = () => {
-  const [progress, setProgress] = useState(loadSavedProgress);
+export function useProgress() {
+  const [progress, setProgress] = useState(readProgress);
 
   useEffect(() => {
     try {
@@ -25,55 +24,30 @@ export const useProgress = () => {
     }
   }, [progress]);
 
-  const saveQuizResult = (unitId, correct, total) => {
-    setProgress(prev => ({
-      ...prev,
-      quiz: {
-        ...prev.quiz,
-        [unitId]: {
-          completed: true,
-          score: correct,
-          correct,
-          total,
-          lastAttempt: new Date().toISOString(),
-        }
-      }
+  const markComplete = (unitId, score, total) => {
+    setProgress((current) => ({
+      ...current,
+      [unitId]: {
+        completed: true,
+        score,
+        total,
+        updatedAt: new Date().toISOString(),
+      },
     }));
   };
 
-  const getQuizResult = (unitId) => {
-    return progress.quiz[unitId] || null;
-  };
-
-  const saveFlashcardMastery = (unitId, masteredIds, total) => {
-    setProgress(prev => ({
-      ...prev,
-      flashcards: {
-        ...prev.flashcards,
-        [unitId]: {
-          masteredIds,
-          total,
-        }
-      }
-    }));
-  };
-
-  const getFlashcardMastery = (unitId) => {
-    return progress.flashcards[unitId] || null;
-  };
+  const getUnitProgress = (unitId) => progress[unitId] || { completed: false, score: 0, total: 0 };
 
   const clearAll = () => {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(LEGACY_STORAGE_KEY);
-    setProgress(INITIAL_PROGRESS);
+    setProgress({});
   };
 
   return {
     progress,
-    saveQuizResult,
-    getQuizResult,
-    saveFlashcardMastery,
-    getFlashcardMastery,
+    markComplete,
+    getUnitProgress,
     clearAll,
   };
-};
+}

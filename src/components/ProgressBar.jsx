@@ -1,16 +1,11 @@
-import React from 'react';
-
-const ProgressBar = ({ current, total, color }) => {
-  const percentage = Math.min(Math.max((current / total) * 100, 0), 100);
+const ProgressBar = ({ current, total, color = '#FFD700' }) => {
+  const percent = total > 0 ? Math.min(100, Math.round((current / total) * 100)) : 0;
 
   return (
-    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+    <div className="h-3 overflow-hidden rounded-full bg-white/10">
       <div
-        className="h-full transition-all duration-500 ease-out"
-        style={{
-          width: `${percentage}%`,
-          backgroundColor: color || '#4a9eff'
-        }}
+        className="h-full rounded-full transition-all duration-500"
+        style={{ width: `${percent}%`, backgroundColor: color }}
       />
     </div>
   );

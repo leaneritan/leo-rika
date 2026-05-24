@@ -1,74 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import UnitCard from '../components/UnitCard';
 import ProgressBar from '../components/ProgressBar';
 import { useProgress } from '../hooks/useProgress';
-import { Trophy } from 'lucide-react';
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { progress } = useProgress();
   const [manifest, setManifest] = useState(null);
+  const [error, setError] = useState('');
+  const { progress } = useProgress();
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/manifest.json`)
-      .then(res => res.json())
-      .then(data => setManifest(data))
-      .catch(err => console.error('Failed to load manifest', err));
+      .then((response) => {
+        if (!response.ok) throw new Error(`Manifest failed: ${response.status}`);
+        return response.json();
+      })
+      .then(setManifest)
+      .catch((err) => {
+        console.error(err);
+        setError('データを読み込めませんでした');
+      });
   }, []);
 
-  if (!manifest) return <div className="min-h-screen flex items-center justify-center text-muted">読み込み中...</div>;
+  if (error) {
+    return <div className="grid min-h-screen place-items-center px-4 text-muted">{error}</div>;
+  }
 
-  // Calculate total progress
-  const totalQuestions = manifest.units.reduce((acc, unit) => {
-    // For normal units, we need to load them to know the count,
-    // but we can estimate or use a placeholder if not loaded yet.
-    // However, the prompt asks for "Progress bar showing total questions answered across all units"
-    return acc + (progress.quiz[unit.id]?.total || 0);
-  }, 0);
+  if (!manifest) {
+    return <div className="grid min-h-screen place-items-center px-4 text-muted">読み込み中...</div>;
+  }
 
-  const totalCorrect = manifest.units.reduce((acc, unit) => {
-    return acc + (progress.quiz[unit.id]?.correct || 0);
-  }, 0);
+  const totals = manifest.units.reduce(
+    (sum, unit) => {
+      const unitProgress = progress[unit.id];
+      return {
+        score: sum.score + (unitProgress?.score || 0),
+        total: sum.total + (unitProgress?.total || unit.questionCount || 0),
+      };
+    },
+    { score: 0, total: 0 },
+  );
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl space-y-12">
-      <header className="text-center space-y-4">
-        <h1 className="text-4xl md:text-6xl font-bold text-white">
-          Leo の 理科 探偵 🔬
-        </h1>
-        <p className="text-[#FFD700] text-xl font-bold">
-          理科（生物）単元1 | テストまで4日
-        </p>
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 md:py-12">
+      <header className="space-y-4">
+        <p className="text-sm font-bold uppercase tracking-[0.25em] text-teal">leo-rika</p>
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h1 className="text-4xl font-black leading-tight text-white md:text-6xl">
+              Leo 縺ｮ 逅・ｧ・謗｢蛛ｵ 溌
+            </h1>
+            <p className="mt-3 text-lg text-muted">{manifest.subject}</p>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-white/5 p-4 md:w-80">
+            <div className="mb-2 flex items-center justify-between text-sm font-bold text-white">
+              <span>Overall Progress</span>
+              <span>{totals.score} / {totals.total || '-'}</span>
+            </div>
+            <ProgressBar current={totals.score} total={totals.total || 1} color="#FFD700" />
+          </div>
+        </div>
       </header>
 
-      <div className="max-w-md mx-auto space-y-2">
-        <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-muted">
-          <span>Overall Progress</span>
-          <span>{totalCorrect} / {totalQuestions || '-'} Questions</span>
-        </div>
-        <ProgressBar current={totalCorrect} total={totalQuestions || 1} color="#FFD700" />
-      </div>
-
-      <main className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto">
-        {manifest.units.map((unit) => {
-          const isDay4 = unit.day === 4;
-          return (
-            <div key={unit.id} className={isDay4 ? "border-2 border-[#FFD700] rounded-2xl p-1" : ""}>
-              <UnitCard
-                unit={{
-                  ...unit,
-                  dayTag: `Day ${unit.day}${isDay4 ? " 🏆" : ""}`,
-                  color: isDay4 ? "#FFD700" : (unit.color || "#4a9eff"),
-                  description: unit.subtitle
-                }}
-                progress={progress}
-              />
-            </div>
-          );
-        })}
-      </main>
-    </div>
+      <section className="grid gap-4 sm:grid-cols-2">
+        {manifest.units.map((unit) => (
+          <UnitCard key={unit.id} unit={unit} progress={progress[unit.id]} />
+        ))}
+      </section>
+    </main>
   );
 };
 

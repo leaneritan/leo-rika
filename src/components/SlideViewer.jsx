@@ -1,56 +1,53 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SlideViewer = ({ slides, unitColor }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const slide = slides[currentIndex];
 
-  const nextSlide = () => setCurrentIndex((prev) => Math.min(prev + 1, slides.length - 1));
-  const prevSlide = () => setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  if (!slides.length) {
+    return <div className="rounded-lg border border-white/10 bg-card p-6 text-muted">スライドがありません</div>;
+  }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold flex items-center gap-3">
-          <span className="w-2 h-8 rounded-full" style={{ backgroundColor: unitColor }}></span>
-          {slide.title}
-        </h2>
-        <div className="text-sm font-mono text-muted bg-white/10 px-3 py-1 rounded-full">
+    <div className="mx-auto max-w-4xl space-y-5">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="text-2xl font-black text-white md:text-4xl">{slide.title}</h2>
+        <span className="shrink-0 rounded-full bg-white/10 px-3 py-1 font-mono text-sm text-muted">
           {currentIndex + 1} / {slides.length}
-        </div>
+        </span>
       </div>
 
-      <div className="min-h-[400px] animate-in slide-in-from-right-4 fade-in duration-300">
-        <div className="card p-6 md:p-8 space-y-6">
-          <p className="text-lg md:text-xl text-text/90 leading-relaxed">
-            {slide.content}
-          </p>
+      <article className="rounded-lg border border-white/10 bg-card p-6 md:p-8">
+        <p className="text-lg italic leading-relaxed text-muted md:text-xl">{slide.content}</p>
+        <ul className="mt-7 space-y-4">
+          {(slide.bullets || []).map((bullet, index) => (
+            <li key={index} className="flex gap-3 text-base leading-relaxed text-text md:text-lg">
+              <span className="mt-2 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: unitColor }} />
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
 
-          <ul className="space-y-4">
-            {(slide.bullets || []).map((bullet, index) => (
-              <li key={index} className="flex gap-3 text-base md:text-lg leading-relaxed text-text">
-                <span className="mt-2 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: unitColor }}></span>
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="flex justify-between gap-4 pt-8">
+      <div className="flex justify-between gap-4">
         <button
-          onClick={prevSlide}
+          type="button"
+          onClick={() => setCurrentIndex((current) => Math.max(0, current - 1))}
           disabled={currentIndex === 0}
-          className="btn-primary bg-white/5 hover:bg-white/10 disabled:opacity-30 flex items-center gap-2"
+          className="btn-primary flex items-center gap-2 bg-white/5 hover:bg-white/10 disabled:opacity-30"
         >
-          <ChevronLeft size={20} /> 謌ｻ繧・
+          <ChevronLeft size={20} />
+          Previous
         </button>
         <button
-          onClick={nextSlide}
+          type="button"
+          onClick={() => setCurrentIndex((current) => Math.min(slides.length - 1, current + 1))}
           disabled={currentIndex === slides.length - 1}
-          className="btn-primary bg-white/5 hover:bg-white/10 disabled:opacity-30 flex items-center gap-2"
+          className="btn-primary flex items-center gap-2 bg-white/5 hover:bg-white/10 disabled:opacity-30"
         >
-          谺｡縺ｸ <ChevronRight size={20} />
+          Next
+          <ChevronRight size={20} />
         </button>
       </div>
     </div>
