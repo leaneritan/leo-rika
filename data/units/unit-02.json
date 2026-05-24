@@ -373,5 +373,117 @@
         ]
       ]
     }
+  ],
+  "activity": [
+    {
+      "type": "classification",
+      "title": "植物を分類しよう",
+      "instruction": "植物カードを正しいグループにドラッグしよう！",
+      "organisms": [
+        {
+          "id": "p1",
+          "name": "アブラナ",
+          "color": "#FFD700"
+        },
+        {
+          "id": "p2",
+          "name": "サクラ",
+          "color": "#FF6B9D"
+        },
+        {
+          "id": "p3",
+          "name": "フジ",
+          "color": "#9B59B6"
+        },
+        {
+          "id": "p4",
+          "name": "ツツジ",
+          "color": "#FF6B9D"
+        },
+        {
+          "id": "p5",
+          "name": "タンポポ",
+          "color": "#FFD700"
+        },
+        {
+          "id": "p6",
+          "name": "マツ",
+          "color": "#95E77E"
+        },
+        {
+          "id": "p7",
+          "name": "イチョウ",
+          "color": "#95E77E"
+        },
+        {
+          "id": "p8",
+          "name": "スギ",
+          "color": "#95E77E"
+        }
+      ],
+      "tree": {
+        "question": "種子をつくる？",
+        "branches": [
+          {
+            "label": "種子植物",
+            "correct": [
+              "p1",
+              "p2",
+              "p3",
+              "p4",
+              "p5",
+              "p6",
+              "p7",
+              "p8"
+            ],
+            "question": "子房がある？",
+            "branches": [
+              {
+                "label": "被子植物（子房あり）",
+                "correct": [
+                  "p1",
+                  "p2",
+                  "p3",
+                  "p4",
+                  "p5"
+                ],
+                "question": "花弁がつながっている？",
+                "branches": [
+                  {
+                    "label": "合弁花",
+                    "correct": [
+                      "p4",
+                      "p5"
+                    ],
+                    "question": null,
+                    "branches": []
+                  },
+                  {
+                    "label": "離弁花",
+                    "correct": [
+                      "p1",
+                      "p2",
+                      "p3"
+                    ],
+                    "question": null,
+                    "branches": []
+                  }
+                ]
+              },
+              {
+                "label": "裸子植物（子房なし）",
+                "correct": [
+                  "p6",
+                  "p7",
+                  "p8"
+                ],
+                "question": null,
+                "branches": []
+              }
+            ]
+          }
+        ]
+      }
+    }
   ]
 }
