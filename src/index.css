@@ -70,3 +70,119 @@ a {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
 }
+
+.sticky-note {
+  width: 120px;
+  min-width: 120px;
+  min-height: 52px;
+  border-radius: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22);
+  color: #111827;
+  cursor: grab;
+  font-weight: 900;
+  padding: 0.65rem 0.75rem;
+  text-align: center;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.sticky-note:active {
+  cursor: grabbing;
+}
+
+.sticky-note-small {
+  width: auto;
+  min-width: 72px;
+  min-height: 34px;
+  border-width: 1px;
+  box-shadow: none;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.sticky-note-selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.28);
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.classification-root-grid,
+.classification-child-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.classification-branch-wrap {
+  min-width: 0;
+}
+
+.classification-zone {
+  position: relative;
+  width: 100%;
+  min-height: 132px;
+  border: 2px dashed rgba(255, 255, 255, 0.22);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.045);
+  padding: 1rem;
+  text-align: left;
+  transition: border-color 180ms ease, background 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.classification-zone:not(.classification-zone-locked):hover {
+  border-color: rgba(255, 215, 0, 0.72);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.classification-zone-locked {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.classification-zone-correct {
+  animation: correct-pulse 650ms ease;
+  border-color: #86efac;
+}
+
+.classification-zone-wrong {
+  animation: wrong-shake 450ms ease;
+  border-color: #f87171;
+}
+
+.classification-children {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.classification-line {
+  align-self: center;
+  width: 2px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+@keyframes correct-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(134, 239, 172, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(134, 239, 172, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(134, 239, 172, 0);
+  }
+}
+
+@keyframes wrong-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-8px);
+  }
+  40%, 80% {
+    transform: translateX(8px);
+  }
+}

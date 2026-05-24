@@ -317,5 +317,119 @@
         }
       ]
     }
+  ],
+  "activity": [
+    {
+      "type": "classification",
+      "title": "生物を特徴で分類しよう",
+      "instruction": "付箋を正しいグループにドラッグ（またはタップ）しよう！",
+      "organisms": [
+        {
+          "id": "org1",
+          "name": "ドジョウ",
+          "color": "#4ECDC4"
+        },
+        {
+          "id": "org2",
+          "name": "マアジ",
+          "color": "#4ECDC4"
+        },
+        {
+          "id": "org3",
+          "name": "オカダンゴムシ",
+          "color": "#FFB347"
+        },
+        {
+          "id": "org4",
+          "name": "ナナホシテントウ",
+          "color": "#FFB347"
+        },
+        {
+          "id": "org5",
+          "name": "クロオオアリ",
+          "color": "#FFB347"
+        },
+        {
+          "id": "org6",
+          "name": "アブラナ",
+          "color": "#95E77E"
+        },
+        {
+          "id": "org7",
+          "name": "オオカナダモ",
+          "color": "#95E77E"
+        },
+        {
+          "id": "org8",
+          "name": "サクラ",
+          "color": "#95E77E"
+        }
+      ],
+      "tree": {
+        "question": "移動する？",
+        "branches": [
+          {
+            "label": "移動する",
+            "correct": [
+              "org1",
+              "org2",
+              "org3",
+              "org4",
+              "org5"
+            ],
+            "question": "何を使って移動する？",
+            "branches": [
+              {
+                "label": "ひれ",
+                "correct": [
+                  "org1",
+                  "org2"
+                ],
+                "question": null,
+                "branches": []
+              },
+              {
+                "label": "あし",
+                "correct": [
+                  "org3",
+                  "org4",
+                  "org5"
+                ],
+                "question": "あしの数は？",
+                "branches": [
+                  {
+                    "label": "6本",
+                    "correct": [
+                      "org4",
+                      "org5"
+                    ],
+                    "question": null,
+                    "branches": []
+                  },
+                  {
+                    "label": "それ以外",
+                    "correct": [
+                      "org3"
+                    ],
+                    "question": null,
+                    "branches": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "移動しない",
+            "correct": [
+              "org6",
+              "org7",
+              "org8"
+            ],
+            "question": null,
+            "branches": []
+          }
+        ]
+      }
+    }
   ]
 }

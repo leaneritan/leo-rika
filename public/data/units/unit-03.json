@@ -553,5 +553,152 @@
         }
       ]
     }
+  ],
+  "activity": [
+    {
+      "type": "classification",
+      "title": "脊椎動物を分類しよう",
+      "instruction": "動物カードを正しいグループにドラッグしよう！",
+      "organisms": [
+        {
+          "id": "a1",
+          "name": "カエル",
+          "color": "#95E77E"
+        },
+        {
+          "id": "a2",
+          "name": "フナ",
+          "color": "#4ECDC4"
+        },
+        {
+          "id": "a3",
+          "name": "トカゲ",
+          "color": "#FFB347"
+        },
+        {
+          "id": "a4",
+          "name": "ツバメ",
+          "color": "#FF6B9D"
+        },
+        {
+          "id": "a5",
+          "name": "クジラ",
+          "color": "#FFD700"
+        },
+        {
+          "id": "a6",
+          "name": "ヘビ",
+          "color": "#FFB347"
+        },
+        {
+          "id": "a7",
+          "name": "ペンギン",
+          "color": "#FF6B9D"
+        },
+        {
+          "id": "a8",
+          "name": "コウモリ",
+          "color": "#FFD700"
+        },
+        {
+          "id": "a9",
+          "name": "サメ",
+          "color": "#4ECDC4"
+        },
+        {
+          "id": "a10",
+          "name": "イモリ",
+          "color": "#95E77E"
+        }
+      ],
+      "tree": {
+        "question": "体温は一定？",
+        "branches": [
+          {
+            "label": "恒温動物",
+            "correct": [
+              "a4",
+              "a5",
+              "a7",
+              "a8"
+            ],
+            "question": "胎生？",
+            "branches": [
+              {
+                "label": "哺乳類（胎生）",
+                "correct": [
+                  "a5",
+                  "a8"
+                ],
+                "question": null,
+                "branches": []
+              },
+              {
+                "label": "鳥類（卵生）",
+                "correct": [
+                  "a4",
+                  "a7"
+                ],
+                "question": null,
+                "branches": []
+              }
+            ]
+          },
+          {
+            "label": "変温動物",
+            "correct": [
+              "a1",
+              "a2",
+              "a3",
+              "a6",
+              "a9",
+              "a10"
+            ],
+            "question": "水中で生活？",
+            "branches": [
+              {
+                "label": "水中（えら呼吸）",
+                "correct": [
+                  "a2",
+                  "a9"
+                ],
+                "question": null,
+                "branches": []
+              },
+              {
+                "label": "陸上・両方",
+                "correct": [
+                  "a1",
+                  "a3",
+                  "a6",
+                  "a10"
+                ],
+                "question": "幼生は水中？",
+                "branches": [
+                  {
+                    "label": "両生類",
+                    "correct": [
+                      "a1",
+                      "a10"
+                    ],
+                    "question": null,
+                    "branches": []
+                  },
+                  {
+                    "label": "は虫類",
+                    "correct": [
+                      "a3",
+                      "a6"
+                    ],
+                    "question": null,
+                    "branches": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
   ]
 }

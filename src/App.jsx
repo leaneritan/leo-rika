@@ -12,6 +12,7 @@ function App() {
         <Route path="/unit/:id/slides" element={<UnitPage mode="slides" />} />
         <Route path="/unit/:id/flashcards" element={<UnitPage mode="flashcards" />} />
         <Route path="/unit/:id/chart" element={<UnitPage mode="chart" />} />
+        <Route path="/unit/:id/activity" element={<UnitPage mode="activity" />} />
         <Route path="/unit/:id/quiz" element={<UnitPage mode="quiz" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

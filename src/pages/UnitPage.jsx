@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, BarChart3, BookOpen, CheckCircle2, Layers } from 'lucide-react';
+import { ArrowLeft, BarChart3, BookOpen, CheckCircle2, Gamepad2, Layers } from 'lucide-react';
+import ClassificationActivity from '../components/ClassificationActivity';
 import ClassificationChart from '../components/ClassificationChart';
 import FlashcardDeck from '../components/FlashcardDeck';
 import QuizEngine from '../components/QuizEngine';
@@ -19,6 +20,7 @@ const modes = [
   { id: 'slides', label: 'スライド', icon: BookOpen },
   { id: 'flashcards', label: 'フラッシュカード', icon: Layers },
   { id: 'chart', label: '分類チャート', icon: BarChart3 },
+  { id: 'activity', label: '分類アクティビティ', icon: Gamepad2 },
   { id: 'quiz', label: 'クイズ', icon: CheckCircle2 },
 ];
 
@@ -51,6 +53,7 @@ const UnitPage = ({ mode }) => {
             flashcards: shuffleItems(sourceUnits.flatMap((source) => source.flashcards || [])),
             quiz: shuffleItems(sourceUnits.flatMap((source) => source.quiz || [])),
             chart: sourceUnits.flatMap((source) => source.chart || []),
+            activity: sourceUnits.flatMap((source) => source.activity || []),
           });
         } else {
           setUnit(data);
@@ -72,6 +75,7 @@ const UnitPage = ({ mode }) => {
     if (activeMode === 'slides') return <SlideViewer key={unit.id} slides={unit.slides || []} unitColor={unitColor} />;
     if (activeMode === 'flashcards') return <FlashcardDeck key={unit.id} flashcards={unit.flashcards || []} unitColor={unitColor} />;
     if (activeMode === 'chart') return <ClassificationChart key={unit.id} charts={unit.chart || []} unitColor={unitColor} />;
+    if (activeMode === 'activity') return <ClassificationActivity key={unit.id} activities={unit.activity || []} unitId={unit.id} />;
     if (activeMode === 'quiz') return <QuizEngine key={unit.id} questions={unit.quiz || []} unitColor={unitColor} unitId={unit.id} />;
     return null;
   }, [activeMode, unit, unitColor]);
