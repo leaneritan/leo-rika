@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #090b18;
+  --text: #e8eaf6;
+  --muted: #7880aa;
+  --card: #181c34;
+  --accent: #FFD700;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.glass {
+  background: rgba(9, 11, 24, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+}
+
+.btn-primary {
+  @apply px-6 py-3 rounded-xl font-bold transition-all active:scale-95;
+}

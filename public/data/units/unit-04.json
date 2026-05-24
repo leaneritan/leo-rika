@@ -1,0 +1,13 @@
+{
+  "id": "unit-04",
+  "day": 4,
+  "title": "総合テスト",
+  "subtitle": "全問題（Day 1〜3）",
+  "emoji": "🏆",
+  "isComprehensive": true,
+  "sourceUnits": ["unit-01", "unit-02", "unit-03"],
+  "slides": [],
+  "flashcards": [],
+  "timeline": [],
+  "quiz": []
+}
