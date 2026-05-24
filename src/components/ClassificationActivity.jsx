@@ -79,7 +79,10 @@ const BranchZone = ({
 }) => {
   const placedIds = placements[branch.key] || [];
   const hasPlaced = placedIds.length > 0;
-  const isExpanded = hasPlaced && branch.branches.length > 0;
+  const hasSubtreePlacement = Object.entries(placements).some(([key, ids]) => (
+    ids.length > 0 && (key === branch.key || key.startsWith(`${branch.key}-`))
+  ));
+  const isExpanded = hasSubtreePlacement && branch.branches.length > 0;
   const zoneFeedback = feedback?.branchKey === branch.key ? feedback.type : null;
 
   const handleDrop = (event) => {
@@ -124,7 +127,11 @@ const BranchZone = ({
               onDragStart={onDragStart}
             />
           ))}
-          {!placedIds.length && <span className="text-sm text-muted">ここに置く</span>}
+          {!placedIds.length && (
+            <span className="text-sm text-muted">
+              {hasSubtreePlacement ? '下の枝に分類中' : 'ここに置く'}
+            </span>
+          )}
         </div>
       </div>
 
@@ -143,7 +150,7 @@ const BranchZone = ({
                 placements={placements}
                 selectedId={selectedId}
                 feedback={feedback}
-                isUnlocked={hasPlaced}
+                isUnlocked={hasSubtreePlacement}
                 onCardSelect={onCardSelect}
                 onDropOrganism={onDropOrganism}
                 onDragStart={onDragStart}
