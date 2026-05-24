@@ -128,7 +128,7 @@ const QuizEngine = ({ questions, unitColor, unitId }) => {
 
         {selectedIndex !== null && (
           <button type="button" onClick={goNext} className="btn-primary mt-6 w-full text-background" style={{ backgroundColor: unitColor }}>
-            {currentIndex === activeQuestions.length - 1 ? 'Show Score' : '谺｡縺ｸ'}
+            {currentIndex === activeQuestions.length - 1 ? 'Show Score' : '次へ'}
           </button>
         )}
       </section>

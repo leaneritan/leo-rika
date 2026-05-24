@@ -16,10 +16,10 @@ const shuffleItems = (items) => {
 };
 
 const modes = [
-  { id: 'slides', label: '当 繧ｹ繝ｩ繧､繝・', icon: BookOpen },
-  { id: 'flashcards', label: 'ワ 繝輔Λ繝・す繝･繧ｫ繝ｼ繝・', icon: Layers },
-  { id: 'chart', label: '翌・・蛻・｡槭メ繝｣繝ｼ繝・', icon: BarChart3 },
-  { id: 'quiz', label: '笨擾ｸ・繧ｯ繧､繧ｺ', icon: CheckCircle2 },
+  { id: 'slides', label: 'スライド', icon: BookOpen },
+  { id: 'flashcards', label: 'フラッシュカード', icon: Layers },
+  { id: 'chart', label: '分類チャート', icon: BarChart3 },
+  { id: 'quiz', label: 'クイズ', icon: CheckCircle2 },
 ];
 
 const UnitPage = ({ mode }) => {

@@ -47,7 +47,7 @@ const Home = () => {
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-4xl font-black leading-tight text-white md:text-6xl">
-              Leo 縺ｮ 逅・ｧ・謗｢蛛ｵ 溌
+              {manifest.appTitle}
             </h1>
             <p className="mt-3 text-lg text-muted">{manifest.subject}</p>
           </div>

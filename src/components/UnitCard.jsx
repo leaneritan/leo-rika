@@ -19,7 +19,7 @@ const UnitCard = ({ unit, progress }) => {
         <div className="flex items-center justify-between gap-3">
           <span className="text-4xl leading-none">{unit.emoji}</span>
           <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-muted">
-            Day {unit.day}{isComprehensive ? ' 醇' : ''}
+            Day {unit.day}{isComprehensive ? ' 🏆' : ''}
           </span>
         </div>
 
