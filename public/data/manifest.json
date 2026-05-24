@@ -1,25 +1,34 @@
 {
+  "appTitle": "Leo の 理科 探偵",
+  "subject": "理科（生物）単元1",
+  "testDate": "4日後",
   "units": [
     {
       "id": "unit-01",
       "day": 1,
-      "title": "第1章 生物の観察と分類",
-      "subtitle": "ルーペの使い方、花のつくり",
-      "emoji": "🌿"
+      "title": "生物の観察と分類",
+      "subtitle": "第1章 pp.8–26",
+      "emoji": "🔬",
+      "color": "#4ECDC4",
+      "questionCount": 10
     },
     {
       "id": "unit-02",
       "day": 2,
-      "title": "第2章前半 植物の分類①",
-      "subtitle": "花のつくり、種子植物",
-      "emoji": "🌸"
+      "title": "植物の分類①花のつくり",
+      "subtitle": "第2章前半 pp.27–35",
+      "emoji": "🌸",
+      "color": "#FF6B9D",
+      "questionCount": 12
     },
     {
       "id": "unit-03",
       "day": 3,
-      "title": "第2章後半＋第3章",
-      "subtitle": "葉・根＋動物の分類",
-      "emoji": "🦎"
+      "title": "植物の分類②葉・根 ＋ 動物の分類",
+      "subtitle": "第2章後半 + 第3章",
+      "emoji": "🦎",
+      "color": "#95E77E",
+      "questionCount": 15
     },
     {
       "id": "unit-04",
@@ -27,6 +36,8 @@
       "title": "総合テスト",
       "subtitle": "全問題（Day 1〜3）",
       "emoji": "🏆",
+      "color": "#FFD700",
+      "questionCount": 37,
       "isComprehensive": true
     }
   ]
